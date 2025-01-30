@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">YouSave</string>
+    <string name="logo_white">White logo</string>
+    <string name="settings_button">Button to open settings</string>
 </resources>
