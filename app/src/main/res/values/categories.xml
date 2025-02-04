@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category_names">
+        <item>Health</item>
+        <item>Food</item>
+        <item>Home</item>
+        <item>Transport</item>
+        <item>Entertainment</item>
+        <item>Family</item>
+        <item>Education</item>
+        <item>Technology</item>
+        <item>Clothes</item>
+        <item>Other</item>
+    </string-array>
+
+    <array name="category_colors">
+        <item>@color/Health</item>
+        <item>@color/Food</item>
+        <item>@color/Home</item>
+        <item>@color/Transport</item>
+        <item>@color/Entertainment</item>
+        <item>@color/Family</item>
+        <item>@color/Education</item>
+        <item>@color/Technology</item>
+        <item>@color/Clothing</item>
+        <item>@color/Other</item>
+    </array>
+
+    <array name="category_images">
+        <item>@drawable/health_icon</item>
+        <item>@drawable/food_icon</item>
+        <item>@drawable/home_icon</item>
+        <item>@drawable/transport_icon</item>
+        <item>@drawable/entertainment_icon</item>
+        <item>@drawable/family_icon</item>
+        <item>@drawable/education_icon</item>
+        <item>@drawable/technology_icon</item>
+        <item>@drawable/clothing_icon</item>
+        <item>@drawable/other_icon</item>
+    </array>
+
+</resources>
