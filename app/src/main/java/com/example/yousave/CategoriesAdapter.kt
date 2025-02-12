@@ -10,15 +10,26 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 
-class CategoriesAdapter(var categories: List<Category>): RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
+class CategoriesAdapter(var categories: List<Category>,private val categoryInterface: CategoryInterface): RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
 
-    inner class CategoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    inner class CategoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener{
 
         val color: View = itemView.findViewById(R.id.color)
         val name: TextView = itemView.findViewById(R.id.name)
         val icon: ImageView = itemView.findViewById(R.id.icon)
         val money: TextView = itemView.findViewById(R.id.money_transactions)
 
+        init{
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            val position = adapterPosition
+
+            if ( position != RecyclerView.NO_POSITION ) {
+                categoryInterface.onCategoryClick(position)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -35,7 +46,7 @@ class CategoriesAdapter(var categories: List<Category>): RecyclerView.Adapter<Ca
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.apply {
             name.text = categories[position].name
-            color.setBackgroundColor(categories[position].color.toArgb())
+            color.setBackgroundColor(categories[position].color)
             icon.setImageResource(categories[position].image)
 
             val desc:String = "${categories[position].moneySpent} zł in ${categories[position].transactions} transactions"
