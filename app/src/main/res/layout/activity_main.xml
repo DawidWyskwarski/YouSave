@@ -230,34 +230,45 @@
                     app:layout_constraintStart_toStartOf="@id/balance_text"
                     app:layout_constraintTop_toBottomOf="@id/balance_text" />
 
-                <RelativeLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/tai_heritage_pro_bold"
+
+                    android:text="No transactions yet"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toBottomOf="@id/spent_num"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/categories"/>
+
+                <androidx.cardview.widget.CardView
                     android:id="@+id/amazing_chart"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
+                    android:layout_height="75dp"
+                    app:layout_constraintWidth_max="600dp"
+
+                    android:backgroundTint="@color/transparent"
 
                     android:layout_margin="20dp"
 
-                    android:background="@drawable/stacked_bar_style"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="30dp"
 
                     app:layout_constraintEnd_toEndOf="parent"
 
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/spent_num"
-                    app:layout_constraintWidth_max="600dp">
+                    app:layout_constraintBottom_toTopOf="@id/categories">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
 
-                        android:fontFamily="@font/tai_heritage_pro_bold"
-
-                        android:text="Amazing stack-bar chart"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
-
-                </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/categories"

@@ -29,8 +29,17 @@ class MainActivity : AppCompatActivity(), CategoryInterface {
             insets
         }
         data = getData()
-
         window.navigationBarColor = ContextCompat.getColor(this, R.color.black)
+
+        val chart: RecyclerView = findViewById(R.id.chart)
+
+        chart.post {
+            val width = chart.width
+            chart.adapter = ChartAdapter(data, width)
+        }
+        chart.layoutManager = object: LinearLayoutManager(this, HORIZONTAL, false) {
+            override fun canScrollVertically() = false
+        }
 
         val categoriesRecycler:RecyclerView = findViewById(R.id.categories)
         categoriesRecycler.adapter = CategoriesAdapter(data,this)
@@ -49,6 +58,15 @@ class MainActivity : AppCompatActivity(), CategoryInterface {
         //temporary solution before i add database or something
         val money:Array<Double> = Array(names.size) { 0.0 }
         val transactions:Array<Int> = Array(names.size) { 0 }
+
+        money[3] = 500.0
+        transactions[3] = 1
+
+        money[0] = 123.0
+        transactions[0] = 3
+
+        money[5] = 200.12
+        transactions[5] = 4
 
         val categories = ArrayList<Category>()
 
