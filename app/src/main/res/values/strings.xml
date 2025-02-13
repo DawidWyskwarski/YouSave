@@ -4,7 +4,7 @@
     <string name="logo_white">White logo</string>
     <string name="settings_button">Button to open settings</string>
     <string name="placeholder_for_money">123 456 zł</string>
-    <string name="earned_msg">You\'ve earned</string>
-    <string name="spent_msg">You\'ve spent</string>
-    <string name="balance_msg">Your balance</string>
+    <string name="earned_msg">Income</string>
+    <string name="spent_msg">Expense</string>
+    <string name="balance_msg">Balance</string>
 </resources>

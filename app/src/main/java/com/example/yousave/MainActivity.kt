@@ -1,15 +1,14 @@
 package com.example.yousave
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.TypedArray
 import android.os.Build
 import android.os.Bundle
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.toColor
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,7 +31,6 @@ class MainActivity : AppCompatActivity(), CategoryInterface {
         window.navigationBarColor = ContextCompat.getColor(this, R.color.black)
 
         val chart: RecyclerView = findViewById(R.id.chart)
-
         chart.post {
             val width = chart.width
             chart.adapter = ChartAdapter(data, width)
@@ -47,6 +45,12 @@ class MainActivity : AppCompatActivity(), CategoryInterface {
             override fun canScrollVertically() = false
         }
 
+        //TODO find a way to do it better
+        val history = findViewById<ImageButton>(R.id.history_button).setOnClickListener{ startActivity(Intent(this, HistoryActivity::class.java)) }
+
+        val recurring = findViewById<ImageButton>(R.id.subscriptions_button).setOnClickListener{ startActivity(Intent(this, RecurringActivity::class.java)) }
+
+        val settings = findViewById<ImageButton>(R.id.settings_button).setOnClickListener{ startActivity(Intent(this, SettingsActivity::class.java)) }
     }
 
     //load data into the list of categories
