@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HomeFragment"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/period_text"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:fontFamily="@font/tai_heritage_pro_bold"
+
+            android:text="This month"
+            android:textColor="@color/white"
+
+            android:textSize="30sp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <!-->Earned<-->
+        <TextView
+            android:id="@+id/earned_text"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginHorizontal="20dp"
+
+            android:fontFamily="@font/tai_heritage_pro_bold"
+
+            android:text="@string/earned_msg"
+
+            android:textColor="@color/white"
+
+            android:textSize="20sp"
+
+            app:layout_constraintEnd_toStartOf="@+id/spent_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/period_text" />
+
+        <TextView
+            android:id="@+id/earned_num"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/tai_heritage_pro_bold"
+            android:maxWidth="115dp"
+
+            android:maxLines="1"
+            android:text="@string/placeholder_for_money"
+
+            android:textColor="#009f33"
+
+            android:textSize="24sp"
+
+            app:layout_constraintEnd_toEndOf="@id/earned_text"
+            app:layout_constraintStart_toStartOf="@id/earned_text"
+            app:layout_constraintTop_toBottomOf="@id/earned_text" />
+        <!-->Spent<-->
+        <TextView
+            android:id="@+id/spent_text"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginHorizontal="20dp"
+
+            android:fontFamily="@font/tai_heritage_pro_bold"
+
+            android:text="@string/spent_msg"
+
+            android:textColor="@color/white"
+
+            android:textSize="20sp"
+
+            app:layout_constraintEnd_toStartOf="@id/balance_text"
+            app:layout_constraintStart_toEndOf="@id/earned_text"
+            app:layout_constraintTop_toBottomOf="@id/period_text" />
+
+        <TextView
+            android:id="@+id/spent_num"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/tai_heritage_pro_bold"
+            android:maxWidth="115dp"
+
+            android:maxLines="1"
+            android:text="@string/placeholder_for_money"
+
+            android:textColor="#ee2121"
+
+            android:textSize="24sp"
+
+            app:layout_constraintEnd_toEndOf="@id/spent_text"
+            app:layout_constraintStart_toStartOf="@id/spent_text"
+            app:layout_constraintTop_toBottomOf="@id/spent_text" />
+        <!-->Balance<-->
+        <TextView
+            android:id="@+id/balance_text"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginHorizontal="20dp"
+
+            android:fontFamily="@font/tai_heritage_pro_bold"
+
+            android:text="@string/balance_msg"
+
+            android:textColor="@color/white"
+
+            android:textSize="20sp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/spent_text"
+            app:layout_constraintTop_toBottomOf="@id/period_text" />
+
+        <TextView
+            android:id="@+id/balance_num"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/tai_heritage_pro_bold"
+            android:maxWidth="115dp"
+
+            android:maxLines="1"
+            android:text="@string/placeholder_for_money"
+
+            android:textColor="#ffcc66"
+
+            android:textSize="24sp"
+
+            app:layout_constraintEnd_toEndOf="@id/balance_text"
+            app:layout_constraintStart_toStartOf="@id/balance_text"
+            app:layout_constraintTop_toBottomOf="@id/balance_text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/tai_heritage_pro_bold"
+
+            android:text="No transactions yet"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/spent_num"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/categories"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/amazing_chart"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            app:layout_constraintWidth_max="600dp"
+
+            android:backgroundTint="@color/transparent"
+
+            android:layout_margin="20dp"
+
+            app:cardElevation="0dp"
+            app:cardCornerRadius="30dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spent_num"
+            app:layout_constraintBottom_toTopOf="@id/categories">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/categories"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="20dp"
+
+            android:nestedScrollingEnabled="false"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/amazing_chart"
+            app:layout_constraintWidth_max="600dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

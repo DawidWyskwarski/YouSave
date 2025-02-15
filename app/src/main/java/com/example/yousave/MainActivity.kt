@@ -1,20 +1,16 @@
 package com.example.yousave
 
-import android.content.Intent
+import HistoryFragment
 import android.content.res.TypedArray
-import android.os.Build
 import android.os.Bundle
-import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-@RequiresApi(Build.VERSION_CODES.O)
-class MainActivity : AppCompatActivity(), CategoryInterface {
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+
+class MainActivity : AppCompatActivity(){
 
     private lateinit var data:List<Category>
 
@@ -28,29 +24,35 @@ class MainActivity : AppCompatActivity(), CategoryInterface {
             insets
         }
         data = getData()
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.black)
+        window.navigationBarColor = resources.getColor(R.color.black)
 
-        val chart: RecyclerView = findViewById(R.id.chart)
-        chart.post {
-            val width = chart.width
-            chart.adapter = ChartAdapter(data, width)
+        //Fragments
+        val home = HomeFragment(data)
+        val history = HistoryFragment()
+        val recurring = RecurringFragment()
+        val settings = SettingsFragment()
+
+        replaceFragment( home )
+
+        val bottomBar:BottomNavigationView = findViewById(R.id.bottom_bar)
+
+        bottomBar.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.home_bar -> replaceFragment( home )
+                R.id.history_bar -> replaceFragment( history )
+                R.id.recurring_bar -> replaceFragment( recurring )
+                R.id.settings_bar -> replaceFragment( settings )
+            }
+            true
         }
-        chart.layoutManager = object: LinearLayoutManager(this, HORIZONTAL, false) {
-            override fun canScrollVertically() = false
+    }
+
+    fun replaceFragment(fragment: Fragment){
+
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragments, fragment)
+            commit()
         }
-
-        val categoriesRecycler:RecyclerView = findViewById(R.id.categories)
-        categoriesRecycler.adapter = CategoriesAdapter(data,this)
-        categoriesRecycler.layoutManager = object : LinearLayoutManager(this) {
-            override fun canScrollVertically() = false
-        }
-
-        //TODO find a way to do it better
-        val history = findViewById<ImageButton>(R.id.history_button).setOnClickListener{ startActivity(Intent(this, HistoryActivity::class.java)) }
-
-        val recurring = findViewById<ImageButton>(R.id.subscriptions_button).setOnClickListener{ startActivity(Intent(this, RecurringActivity::class.java)) }
-
-        val settings = findViewById<ImageButton>(R.id.settings_button).setOnClickListener{ startActivity(Intent(this, SettingsActivity::class.java)) }
     }
 
     //load data into the list of categories
@@ -83,12 +85,4 @@ class MainActivity : AppCompatActivity(), CategoryInterface {
         return categories
     }
 
-    override fun onCategoryClick(position: Int) {
-        val category = data[position]
-
-        val intent = Intent(this, CategoryInfoActivity::class.java )
-        intent.putExtra("DATA", category)
-
-        startActivity(intent)
-    }
 }
