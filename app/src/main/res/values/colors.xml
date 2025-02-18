@@ -6,6 +6,7 @@
     <color name="dark_gray">#262626</color>
 
     <color name="light_blue">#45AFFF</color>
+    <color name="lighter_blue">#40D0FF</color>
 
     <color name="Health">#c3eba0</color>
     <color name="Food">#f3e3c4</color>
