@@ -61,7 +61,7 @@
             android:maxLines="1"
             android:text="@string/placeholder_for_money"
 
-            android:textColor="#009f33"
+            android:textColor="@color/income_green"
 
             android:textSize="24sp"
 
@@ -101,7 +101,7 @@
             android:maxLines="1"
             android:text="@string/placeholder_for_money"
 
-            android:textColor="#ee2121"
+            android:textColor="@color/expense_red"
 
             android:textSize="24sp"
 
@@ -141,7 +141,7 @@
             android:maxLines="1"
             android:text="@string/placeholder_for_money"
 
-            android:textColor="#ffcc66"
+            android:textColor="@color/balance_orange"
 
             android:textSize="24sp"
 

@@ -8,6 +8,10 @@
     <color name="light_blue">#45AFFF</color>
     <color name="lighter_blue">#40D0FF</color>
 
+    <color name="income_green">#009f33</color>
+    <color name="expense_red">#ee2121</color>
+    <color name="balance_orange">#ffcc66</color>
+
     <color name="Health">#c3eba0</color>
     <color name="Food">#f3e3c4</color>
     <color name="Home">#ff9312</color>
