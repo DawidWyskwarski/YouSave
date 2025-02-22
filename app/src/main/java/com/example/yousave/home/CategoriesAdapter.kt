@@ -1,4 +1,4 @@
-package com.example.yousave
+package com.example.yousave.home
 
 import android.os.Build
 import android.view.LayoutInflater
@@ -8,8 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.example.yousave.R
 
-class CategoriesAdapter(var categories: List<Category>,private val categoryInterface: CategoryInterface): RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
+class CategoriesAdapter(var categories: List<Category>, private val categoryInterface: CategoryInterface): RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
 
     inner class CategoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener{
 
@@ -52,6 +53,5 @@ class CategoriesAdapter(var categories: List<Category>,private val categoryInter
 
             money.text = desc
         }
-
     }
 }

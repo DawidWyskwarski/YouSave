@@ -1,4 +1,4 @@
-package com.example.yousave
+package com.example.yousave.home
 
 import android.os.Bundle
 import android.view.View
@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.yousave.R
 
 class CategoryInfoActivity : AppCompatActivity() {
 
@@ -18,7 +19,7 @@ class CategoryInfoActivity : AppCompatActivity() {
     private lateinit var money:TextView
     private lateinit var colorBar:View
 
-    private lateinit var category:Category
+    private lateinit var category: Category
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,7 +1,5 @@
-package com.example.yousave
+package com.example.yousave.home
 
-import android.icu.text.ListFormatter.Width
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

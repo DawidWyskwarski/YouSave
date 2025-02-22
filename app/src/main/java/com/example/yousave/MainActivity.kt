@@ -1,10 +1,9 @@
 package com.example.yousave
 
-import HistoryFragment
+import com.example.yousave.history.HistoryFragment
 import android.content.Intent
 import android.content.res.TypedArray
 import android.os.Bundle
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,12 +12,15 @@ import androidx.fragment.app.Fragment
 import com.example.yousave.databaseClasses.AppDatabase
 import com.example.yousave.databaseClasses.MoneyTransactions
 import com.example.yousave.databaseClasses.TransactionDao
+import com.example.yousave.home.Category
+import com.example.yousave.home.HomeFragment
+import com.example.yousave.recurring.RecurringFragment
+import com.example.yousave.settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.Date
 
 class MainActivity : AppCompatActivity(){

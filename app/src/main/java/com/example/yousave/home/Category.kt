@@ -1,4 +1,4 @@
-package com.example.yousave
+package com.example.yousave.home
 
 import android.os.Parcel
 import android.os.Parcelable

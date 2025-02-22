@@ -1,4 +1,4 @@
-package com.example.yousave
+package com.example.yousave.home
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.yousave.R
 
-class HomeFragment(private var data:List<Category>,private var totalIncome:Double, private var totalExpense:Double) : Fragment(), CategoryInterface{
+class HomeFragment(private var data:List<Category>, private var totalIncome:Double, private var totalExpense:Double) : Fragment(),
+    CategoryInterface {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
 
