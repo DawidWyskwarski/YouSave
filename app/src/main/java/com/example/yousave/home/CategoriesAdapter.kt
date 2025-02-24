@@ -49,7 +49,7 @@ class CategoriesAdapter(var categories: List<Category>, private val categoryInte
             color.setBackgroundColor(categories[position].color)
             icon.setImageResource(categories[position].image)
 
-            val desc:String = "${categories[position].moneySpent} zł in ${categories[position].transactions} transactions"
+            val desc = "${categories[position].moneySpent} zł in ${categories[position].transactions} transactions"
 
             money.text = desc
         }

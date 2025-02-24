@@ -1,22 +1,32 @@
 package com.example.yousave
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.lifecycleScope
+import com.example.yousave.databaseClasses.AppDatabase
+import com.example.yousave.databaseClasses.Transaction
+import kotlinx.coroutines.launch
+import java.util.Date
 
 class AddTransactionActivity : AppCompatActivity() {
+
+    private lateinit var categories:Spinner
+    private lateinit var expense:RadioButton
+    private lateinit var income:RadioButton
+    private lateinit var oneTime:RadioButton
+    private lateinit var repetitive:RadioButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,13 +38,21 @@ class AddTransactionActivity : AppCompatActivity() {
         }
         window.navigationBarColor = ContextCompat.getColor(this, R.color.dark_gray)
 
-        val expense:RadioButton = findViewById(R.id.expense)
-        val income:RadioButton = findViewById(R.id.income)
+        expense = findViewById(R.id.expense)
+        income = findViewById(R.id.income)
+        oneTime= findViewById(R.id.one_time)
+        repetitive = findViewById(R.id.repetitive)
 
-        val oneTime:RadioButton = findViewById(R.id.one_time)
-        val repetitive:RadioButton = findViewById(R.id.repetitive)
+        categories = findViewById(R.id.category_selector)
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.category_names,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            categories.adapter = adapter
+        }
 
-        val categories:Spinner = findViewById(R.id.category_selector)
         val perMonth: LinearLayout = findViewById(R.id.per_month)
 
         expense.setOnClickListener { categories.visibility = View.VISIBLE }
@@ -44,14 +62,32 @@ class AddTransactionActivity : AppCompatActivity() {
         repetitive.setOnClickListener {perMonth.visibility = View.VISIBLE}
 
         findViewById<Button>(R.id.add).setOnClickListener{
-            add()
+            addTransaction()
         }
     }
 
-    private fun add(){
-        //TODO get all the data and from editTexts and add to data base
+    private fun addTransaction(){
 
-        finish()
+        val db = AppDatabase.getDatabase(this)
+        val dao = db.transactionDao()
+
+        // running it on a background thread to not block the main one
+        lifecycleScope.launch {
+            dao.insert(
+                Transaction(
+                    0,
+                    Date(),
+                    if (expense.isChecked) {
+                        categories.selectedItem.toString()
+                    } else "Income",
+                    findViewById<EditText>(R.id.money_input).text.toString().toDouble(),
+                    findViewById<EditText>(R.id.title).text.toString(),
+                    findViewById<EditText>(R.id.description).text.toString(),
+                )
+            )
+
+            finish()
+        }
     }
 
 }

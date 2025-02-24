@@ -14,11 +14,6 @@ import com.example.yousave.R
 
 class CategoryInfoActivity : AppCompatActivity() {
 
-    private lateinit var name:TextView
-    private lateinit var icon:ImageView
-    private lateinit var money:TextView
-    private lateinit var colorBar:View
-
     private lateinit var category: Category
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,25 +30,22 @@ class CategoryInfoActivity : AppCompatActivity() {
         category = intent.getParcelableExtra("DATA") ?: throw IllegalStateException("Category data missing!")
 
         initializeViews()
-
     }
 
-    fun initializeViews(){
-        name = findViewById<TextView>(R.id.name)
+    private fun initializeViews(){
+        val name = findViewById<TextView>(R.id.name)
         name.text = category.name
         name.setTextColor(category.color)
 
-        icon = findViewById<ImageView>(R.id.icon)
+        val icon = findViewById<ImageView>(R.id.icon)
         icon.setImageResource(category.image)
 
-        money = findViewById<TextView>(R.id.money)
+        val money = findViewById<TextView>(R.id.money)
         val tmp = "${category.moneySpent} zł in ${category.transactions} transactions"
         money.text = tmp
         money.setTextColor(category.color)
 
-        colorBar = findViewById<View>(R.id.color_bar)
+        val colorBar = findViewById<View>(R.id.color_bar)
         colorBar.background = category.color.toDrawable()
     }
-
-
 }

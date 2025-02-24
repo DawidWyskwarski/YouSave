@@ -10,40 +10,64 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.yousave.MainActivity
 import com.example.yousave.R
 
-class HomeFragment(private var data:List<Category>, private var totalIncome:Double, private var totalExpense:Double) : Fragment(),
-    CategoryInterface {
+class HomeFragment(
+    private var data:List<Category> = listOf(),
+): Fragment(), CategoryInterface {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
+    private lateinit var chart:RecyclerView
+    private lateinit var chartAdapter: ChartAdapter
 
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
+    private lateinit var categories:RecyclerView
+    private lateinit var categoriesAdapter: CategoriesAdapter
+
+    private lateinit var incomeT: TextView
+    private lateinit var expenseT: TextView
+    private lateinit var balanceT: TextView
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val chart: RecyclerView = view.findViewById(R.id.chart)
-        view.findViewById<TextView>(R.id.earned_num).text = "$totalIncome zł"
-        view.findViewById<TextView>(R.id.spent_num).text = "$totalExpense zł"
-        view.findViewById<TextView>(R.id.balance_num).text = "${totalIncome - totalExpense} zł"
+        incomeT = view.findViewById(R.id.earned_num)
+        expenseT = view.findViewById(R.id.spent_num)
+        balanceT = view.findViewById(R.id.balance_num)
 
-        chart.post {
-            val width = chart.width
-            chart.adapter = ChartAdapter(data, width)
+        categories = view.findViewById(R.id.categories)
+
+        chart = view.findViewById(R.id.chart)
+
+        (activity as? MainActivity)?.loadHomeData { newData, income, expense ->
+            data = newData
+
+            //need its width and need to make sure it got initialized properly to get it
+            chart.post {
+                chartAdapter = ChartAdapter(data, chart.width)
+                chart.adapter = chartAdapter
+                chart.layoutManager = object: LinearLayoutManager(requireContext(), HORIZONTAL, false) {
+                    override fun canScrollVertically() = false
+                }
+            }
+
+            categoriesAdapter = CategoriesAdapter(data,this)
+            categories.adapter = categoriesAdapter
+
+            categories.layoutManager = object : LinearLayoutManager(requireContext()) {
+                override fun canScrollVertically() = false
+            }
+
+            incomeT.text = "$income zł"
+            expenseT.text = "$expense zł"
+            balanceT.text = "${income - expense} zł"
         }
 
-        chart.layoutManager = object: LinearLayoutManager(requireContext(), HORIZONTAL, false) {
-            override fun canScrollVertically() = false
-        }
+    }
 
-        val categoriesRecycler:RecyclerView = view.findViewById(R.id.categories)
-        categoriesRecycler.adapter = CategoriesAdapter(data,this)
-        categoriesRecycler.layoutManager = object : LinearLayoutManager(requireContext()) {
-            override fun canScrollVertically() = false
-        }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
 
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onCategoryClick(position: Int) {
@@ -54,5 +78,4 @@ class HomeFragment(private var data:List<Category>, private var totalIncome:Doub
 
         startActivity(intent)
     }
-
 }

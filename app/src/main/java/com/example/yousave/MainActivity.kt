@@ -4,11 +4,13 @@ import com.example.yousave.history.HistoryFragment
 import android.content.Intent
 import android.content.res.TypedArray
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.yousave.databaseClasses.AppDatabase
 import com.example.yousave.databaseClasses.MoneyTransactions
 import com.example.yousave.databaseClasses.TransactionDao
@@ -18,9 +20,9 @@ import com.example.yousave.recurring.RecurringFragment
 import com.example.yousave.settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Date
 
 class MainActivity : AppCompatActivity(){
@@ -28,11 +30,11 @@ class MainActivity : AppCompatActivity(){
     private lateinit var db:AppDatabase
     private lateinit var transactionDao: TransactionDao
 
-    private lateinit var homeData:List<Category>
-
-    private var totalIncome: Double = 0.0
-    private var totalExpense: Double = 0.0
-
+    //Fragments
+    private val home = HomeFragment()
+    private val history = HistoryFragment()
+    private val recurring = RecurringFragment()
+    private val settings = SettingsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,36 +50,29 @@ class MainActivity : AppCompatActivity(){
         db = AppDatabase.getDatabase(this)
         transactionDao = db.transactionDao()
 
-        homeData = getHomeData()
-
-        //Fragments
-        val home = HomeFragment( homeData ,totalIncome, totalExpense)
-        val history = HistoryFragment()
-        val recurring = RecurringFragment()
-        val settings = SettingsFragment()
-
         replaceFragment( home )
-
-        val bottomBar:BottomNavigationView = findViewById(R.id.bottom_bar)
 
         val addButton:FloatingActionButton = findViewById(R.id.add_transaction)
 
-        bottomBar.setOnItemSelectedListener {
+        //switching fragments
+        findViewById<BottomNavigationView>(R.id.bottom_bar).setOnItemSelectedListener {
+
             when(it.itemId){
-                R.id.home_bar -> { replaceFragment( home ); addButton.alpha = 1F }
-                R.id.history_bar -> { replaceFragment( history ); addButton.alpha = 0F }
-                R.id.recurring_bar -> { replaceFragment(recurring); addButton.alpha = 0F }
-                R.id.settings_bar -> { replaceFragment( settings ); addButton.alpha = 0F }
+                R.id.home_bar -> { replaceFragment( home ); addButton.visibility = View.VISIBLE; }
+                R.id.history_bar -> { replaceFragment( history ); addButton.visibility = View.GONE; }
+                R.id.recurring_bar -> { replaceFragment(recurring); addButton.visibility = View.GONE; }
+                R.id.settings_bar -> { replaceFragment( settings ); addButton.visibility = View.GONE; }
             }
             true
         }
 
+        //activity to add transactions to database starts
         addButton.setOnClickListener {
             startActivity( Intent(this, AddTransactionActivity::class.java) )
         }
     }
 
-    fun replaceFragment(fragment: Fragment){
+    private fun replaceFragment(fragment: Fragment){
 
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragments, fragment)
@@ -85,27 +80,31 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
-    //load data into the list of categories
-    private fun getHomeData():List<Category>{
+    //load data for a home fragment
+    fun loadHomeData(onDataLoaded: (List<Category>,Double,Double) -> Unit){
         val names:Array<String> = resources.getStringArray(R.array.category_names)
         val colors:IntArray = resources.getIntArray(R.array.category_colors)
         val images: TypedArray = resources.obtainTypedArray(R.array.category_images)
 
         val categories = ArrayList<Category>()
 
-        CoroutineScope(Dispatchers.IO).launch {
-            totalIncome = transactionDao.getMoneyTransactionsMonth("Income", Date()).money
+        lifecycleScope.launch {
+            val totalIncome = transactionDao.getMoneyTransactionsMonth("Income").money
+            var totalExpense = 0.0
 
             for (i in names.indices) {
-                val mt: MoneyTransactions = transactionDao.getMoneyTransactionsMonth(names[i], Date())
+                val mt: MoneyTransactions = transactionDao.getMoneyTransactionsMonth(names[i])
 
                 totalExpense += mt.money
 
                 categories.add(Category(names[i], mt.money, mt.transactions, colors[i], images.getResourceId(i, 0)))
             }
             images.recycle()
-        }
 
-        return categories
+            //pass data back to UI thread
+            withContext(Dispatchers.Main) {
+                onDataLoaded(categories,totalIncome,totalExpense)
+            }
+        }
     }
 }

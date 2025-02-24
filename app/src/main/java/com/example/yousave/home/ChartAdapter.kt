@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ChartAdapter(var categories: List<Category>, var recyclerViewWidth: Int): RecyclerView.Adapter<ChartAdapter.ChartViewHolder>() {
 
-    //sums up all of money spent
-    val allMoney = categories.fold(0.0) { sum, category -> sum + category.moneySpent}
+    //sums up all of money spent to later calculate the expense percentage of each category
+    private var allMoney = categories.fold(0.0) { sum, category -> sum + category.moneySpent}
 
     inner class ChartViewHolder(view: View): RecyclerView.ViewHolder(view)
 
@@ -26,12 +26,17 @@ class ChartAdapter(var categories: List<Category>, var recyclerViewWidth: Int): 
 
     override fun onBindViewHolder(holder: ChartViewHolder, position: Int) {
         holder.itemView.setBackgroundColor(categories[position].color)
+
         if (allMoney > 0 && recyclerViewWidth > 0) {
+
+            //calculates the View width based its percentage of all expenses
             val newWidth = ((categories[position].moneySpent / allMoney) * recyclerViewWidth).toInt()
+
             holder.itemView.layoutParams = holder.itemView.layoutParams.apply {
                 width = newWidth
             }
-            holder.itemView.requestLayout() // Ensure layout updates
+
+            holder.itemView.requestLayout()
         }
     }
 }
