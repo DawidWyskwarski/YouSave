@@ -37,6 +37,9 @@ android {
 }
 
 dependencies {
+    // MPAndroidChart
+    implementation(libs.mpandroidchart)
+
     // ROOM
     implementation(libs.androidx.room.runtime)
     implementation(libs.protolite.well.known.types)

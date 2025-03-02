@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yousave.MainActivity
 import com.example.yousave.R
+import com.example.yousave.home.categoryInfo.CategoryInfoActivity
 
 class HomeFragment(
     private var data:List<Category> = listOf(),

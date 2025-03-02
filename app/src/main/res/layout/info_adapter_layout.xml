@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/dark_gray"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/date"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Date"
+        android:fontFamily="@font/tai_heritage_pro_bold"
+        android:textColor="@color/white"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/price"
+
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+
+        android:text="Price"
+        android:fontFamily="@font/tai_heritage_pro_bold"
+        android:textColor="@color/white"
+
+        android:maxLines="1"
+
+        android:layout_marginStart="25dp"
+
+        app:layout_constraintStart_toEndOf="@id/date"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="3"
+        android:text="Title &amp; Description"
+        android:fontFamily="@font/tai_heritage_pro_bold"
+        android:textColor="@color/white"
+
+        app:layout_constraintStart_toEndOf="@id/price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

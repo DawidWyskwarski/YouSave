@@ -17,6 +17,9 @@ import androidx.lifecycle.lifecycleScope
 import com.example.yousave.databaseClasses.AppDatabase
 import com.example.yousave.databaseClasses.Transaction
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.Calendar
 import java.util.Date
 
 class AddTransactionActivity : AppCompatActivity() {
@@ -76,7 +79,7 @@ class AddTransactionActivity : AppCompatActivity() {
             dao.insert(
                 Transaction(
                     0,
-                    Date(),
+                    today(),
                     if (expense.isChecked) {
                         categories.selectedItem.toString()
                     } else "Income",
@@ -88,6 +91,19 @@ class AddTransactionActivity : AppCompatActivity() {
 
             finish()
         }
+    }
+
+    private fun today():Date{
+        //for the newer API levels (> 26)
+        //return Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant())
+
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY,12)
+        calendar.set(Calendar.MINUTE,0)
+        calendar.set(Calendar.SECOND,0)
+        calendar.set(Calendar.MILLISECOND,0)
+
+        return calendar.time
     }
 
 }

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_gray"
-    tools:context=".home.CategoryInfoActivity">
+    tools:context=".home.categoryInfo.CategoryInfoActivity">
     <LinearLayout
         android:id="@+id/bar"
 
@@ -75,7 +75,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bar" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/chart"
 
         android:layout_width="match_parent"
@@ -85,22 +85,7 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/money">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:text="amazing chart of transactions"
-            android:textColor="@color/white"
-            android:textSize="26sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@id/money"/>
 
     <View
         android:id="@+id/color_bar"
@@ -114,7 +99,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chart" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/recycler_view_columns"
 
         android:layout_width="match_parent"
@@ -130,6 +115,8 @@
         app:layout_constraintTop_toBottomOf="@id/color_bar">
 
         <TextView
+            android:id="@+id/tmp1"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -138,9 +125,13 @@
             android:text="Date"
 
             android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:textSize="17sp" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
+            android:id="@+id/tmp2"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -151,32 +142,42 @@
             android:text="Price"
 
             android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@id/tmp1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
-
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
 
             android:layout_marginStart="50dp"
 
             android:fontFamily="@font/tai_heritage_pro_bold"
 
-            android:text="Description"
+            android:text="Title &amp; Description"
 
             android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:textSize="17sp" app:layout_constraintStart_toEndOf="@id/tmp2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/transaction_info"
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
 
         android:layout_marginHorizontal="20dp"
 
+        android:layout_marginBottom="20dp"
+
         app:layout_constraintEnd_toEndOf="@id/recycler_view_columns"
         app:layout_constraintStart_toStartOf="@id/recycler_view_columns"
-        app:layout_constraintTop_toBottomOf="@id/recycler_view_columns" />
+        app:layout_constraintTop_toBottomOf="@id/recycler_view_columns"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
