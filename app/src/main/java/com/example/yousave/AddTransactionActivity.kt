@@ -1,5 +1,7 @@
 package com.example.yousave
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -65,11 +67,11 @@ class AddTransactionActivity : AppCompatActivity() {
         repetitive.setOnClickListener {perMonth.visibility = View.VISIBLE}
 
         findViewById<Button>(R.id.add).setOnClickListener{
-            addTransaction()
+            addTransaction(this)
         }
     }
 
-    private fun addTransaction(){
+    private fun addTransaction(context: Context){
 
         val db = AppDatabase.getDatabase(this)
         val dao = db.transactionDao()
@@ -89,6 +91,9 @@ class AddTransactionActivity : AppCompatActivity() {
                 )
             )
 
+            val intent = Intent(context, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
             finish()
         }
     }
