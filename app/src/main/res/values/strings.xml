@@ -7,4 +7,10 @@
     <string name="earned_msg">Income</string>
     <string name="spent_msg">Expense</string>
     <string name="balance_msg">Balance</string>
+
+    <string name="no_transactions_message">No transactions yet</string>
+
+    <string name="price_column">Price</string>
+    <string name="date_colum">Date</string>
+    <string name="title_column">Title &amp; Description</string>
 </resources>

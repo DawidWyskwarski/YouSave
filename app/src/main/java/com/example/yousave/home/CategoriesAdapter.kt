@@ -10,30 +10,35 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yousave.R
 
-class CategoriesAdapter(var categories: List<Category>, private val categoryInterface: CategoryInterface): RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
+class CategoriesAdapter(
+    private var categories: List<Category>,
+    private val categoryInterface: CategoryInterface
+) : RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
 
-    inner class CategoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener{
+    inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
 
         val color: View = itemView.findViewById(R.id.color)
         val name: TextView = itemView.findViewById(R.id.name)
         val icon: ImageView = itemView.findViewById(R.id.icon)
         val money: TextView = itemView.findViewById(R.id.money_transactions)
 
-        init{
+        init {
             itemView.setOnClickListener(this)
         }
 
         override fun onClick(p0: View?) {
             val position = adapterPosition
 
-            if ( position != RecyclerView.NO_POSITION ) {
+            if (position != RecyclerView.NO_POSITION) {
                 categoryInterface.onCategoryClick(position)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.categories_layout,parent,false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.categories_layout, parent, false)
 
         return CategoryViewHolder(view)
     }
@@ -49,7 +54,8 @@ class CategoriesAdapter(var categories: List<Category>, private val categoryInte
             color.setBackgroundColor(categories[position].color)
             icon.setImageResource(categories[position].image)
 
-            val desc = "${categories[position].moneySpent} zł in ${categories[position].transactions} transactions"
+            val desc =
+                "${categories[position].moneySpent} zł in ${categories[position].transactions} transactions"
 
             money.text = desc
         }

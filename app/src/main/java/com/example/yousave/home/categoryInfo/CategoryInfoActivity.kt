@@ -1,16 +1,14 @@
 package com.example.yousave.home.categoryInfo
 
 import android.annotation.SuppressLint
-import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.yousave.R
 import com.example.yousave.databaseClasses.AppDatabase
 import com.example.yousave.databaseClasses.Transaction
-import com.example.yousave.databaseClasses.TransactionDao
 import com.example.yousave.home.Category
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
@@ -28,23 +25,16 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.google.protobuf.Value
-import kotlinx.coroutines.awaitAll
 import java.text.SimpleDateFormat
 import java.util.Date
 
 class CategoryInfoActivity : AppCompatActivity() {
 
     private lateinit var category: Category
-    private lateinit var db: AppDatabase
-    private lateinit var dao: TransactionDao
 
-    private lateinit var infoAdapter: InfoAdapter
-
-    private var transactions: List<Transaction> = listOf()
+    private lateinit var transactions: List<Transaction>
 
     private lateinit var info: RecyclerView
-    private lateinit var chart: LineChart
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,16 +47,17 @@ class CategoryInfoActivity : AppCompatActivity() {
         }
         window.navigationBarColor = ContextCompat.getColor(this, R.color.dark_gray)
 
-        db = AppDatabase.getDatabase(this)
-        dao = db.transactionDao()
+        val db = AppDatabase.getDatabase(this)
+        val dao = db.transactionDao()
 
         category = intent.getParcelableExtra("DATA")
             ?: throw IllegalStateException("Category data missing!")
+
         initializeViews()
 
         lifecycleScope.launch {
-            transactions = dao.getCategoryTransactions(category.name, category.transactions )
 
+            transactions = dao.getCategoryTransactions(category.name, category.transactions)
             info.adapter = InfoAdapter(transactions)
 
             setUpChart()
@@ -74,20 +65,23 @@ class CategoryInfoActivity : AppCompatActivity() {
     }
 
     private fun initializeViews() {
-        val name = findViewById<TextView>(R.id.name)
-        name.text = category.name
-        name.setTextColor(category.color)
 
-        val icon = findViewById<ImageView>(R.id.icon)
-        icon.setImageResource(category.image)
+        findViewById<TextView>(R.id.name).apply {
+            text = category.name
+            setTextColor(category.color)
+        }
 
-        val money = findViewById<TextView>(R.id.money)
-        val tmp = "${category.moneySpent} zł in ${category.transactions} transactions"
-        money.text = tmp
-        money.setTextColor(category.color)
+        findViewById<ImageView>(R.id.icon).apply { setImageResource(category.image) }
 
-        val colorBar = findViewById<View>(R.id.color_bar)
-        colorBar.background = category.color.toDrawable()
+        findViewById<TextView>(R.id.money).apply {
+            val tmp = "${category.moneySpent} zł in ${category.transactions} transactions"
+            text = tmp
+            setTextColor(category.color)
+        }
+
+        findViewById<View>(R.id.color_bar).apply {
+            background.setColorFilter(category.color, PorterDuff.Mode.SRC_IN)
+        }
 
         info = findViewById(R.id.transaction_info)
         info.layoutManager = object : LinearLayoutManager(this) {
@@ -95,10 +89,7 @@ class CategoryInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUpChart() {
-
-        chart = findViewById(R.id.chart)
-
+    private fun getChartEntries(): List<Entry> {
         val dateMoneyPairs = transactions.map { transaction ->
             (transaction.date to transaction.money)
         }
@@ -107,13 +98,20 @@ class CategoryInfoActivity : AppCompatActivity() {
             .mapValues { (_, values) -> values.sum() }
 
         val chartEntries = dataPoints.map { (date, money) ->
-
             Entry(date.time.toFloat(), money.toFloat())
         }.reversed()
 
+        return chartEntries
+    }
+
+    private fun setUpChart() {
+
+        val chart: LineChart = findViewById(R.id.chart)
+
+        val entries = getChartEntries()
 
         //data set
-        val dataSet = LineDataSet(chartEntries, "").apply {
+        val dataSet = LineDataSet(entries, "").apply {
             color = category.color
 
             valueTextColor = resources.getColor(R.color.white)
@@ -133,7 +131,7 @@ class CategoryInfoActivity : AppCompatActivity() {
             position = XAxis.XAxisPosition.BOTTOM
             granularity = 1f
 
-            setLabelCount(chartEntries.size, true)
+            setLabelCount(entries.size, true)
 
             setDrawGridLines(false)
 
@@ -174,6 +172,5 @@ class CategoryInfoActivity : AppCompatActivity() {
 
         chart.data = LineData(dataSet)
         chart.invalidate()
-
     }
 }

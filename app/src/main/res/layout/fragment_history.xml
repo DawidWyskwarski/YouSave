@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HistoryFragment">
+    tools:context="history.HistoryFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
+        <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/history_chart"
 
             android:layout_width="match_parent"
@@ -43,16 +43,7 @@
 
             app:layout_constraintTop_toBottomOf="@id/history_name">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="amazing chart"
-                android:textColor="@color/white"
-
-                android:textSize="30sp" />
-
-        </LinearLayout>
+        </com.github.mikephil.charting.charts.BarChart>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

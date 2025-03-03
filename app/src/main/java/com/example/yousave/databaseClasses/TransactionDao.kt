@@ -16,16 +16,15 @@ interface TransactionDao {
     @Delete
     suspend fun remove(transaction: Transaction)
 
-    @Query("SELECT SUM(money) as money, COUNT(*) as transactions FROM `transaction` WHERE strftime('%Y-%m', date / 1000, 'unixepoch') = strftime('%Y-%m', 'now') AND category = :categoryName")
-    suspend fun getMoneyTransactionsMonth(categoryName: String): MoneyTransactions
+    @Query("SELECT SUM(money) as money, COUNT(*) as transactions FROM `transaction` WHERE strftime('%Y-%m', date / 1000, 'unixepoch') = strftime('%Y-%m', 'now') AND category = :category")
+    suspend fun getMoneyTransactionsMonth(category: String): MoneyTransactions
 
-    @Query("SELECT SUM(money) as money, COUNT(*) as transactions FROM `transaction` WHERE strftime('%Y', date / 1000, 'unixepoch') = strftime('%Y', 'now') AND category = :categoryName")
-    suspend fun getMoneyTransactionsYear(categoryName: String): MoneyTransactions
+    @Query("SELECT SUM(money) as money, COUNT(*) as transactions FROM `transaction` WHERE strftime('%Y', date / 1000, 'unixepoch') = strftime('%Y', 'now') AND category = :category")
+    suspend fun getMoneyTransactionsYear(category: String): MoneyTransactions
 
-    @Query("SELECT SUM(money) as money, COUNT(*) as transactions FROM `transaction` WHERE category = :categoryName")
-    suspend fun getMoneyTransactionsAll(categoryName: String): MoneyTransactions
+    @Query("SELECT SUM(money) as money, COUNT(*) as transactions FROM `transaction` WHERE category = :category")
+    suspend fun getMoneyTransactionsAll(category: String): MoneyTransactions
 
-    @Query("SELECT * FROM `transaction` WHERE category = :categoryName ORDER BY date DESC LIMIT :limit")
-    suspend fun getCategoryTransactions(categoryName: String, limit:Int):List<Transaction>
-
+    @Query("SELECT * FROM `transaction` WHERE category = :category ORDER BY date DESC LIMIT :limit")
+    suspend fun getCategoryTransactions(category: String, limit:Int):List<Transaction>
 }

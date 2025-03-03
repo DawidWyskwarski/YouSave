@@ -4,7 +4,14 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
 
-data class Category(var name:String, val moneySpent:Double, val transactions:Int, val color:Int, @DrawableRes val image:Int): Parcelable {
+data class Category(
+    var name: String,
+    val moneySpent: Double,
+    val transactions: Int,
+    val color: Int,
+    @DrawableRes val image: Int
+
+) : Parcelable {
 
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),

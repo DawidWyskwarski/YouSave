@@ -19,8 +19,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.yousave.databaseClasses.AppDatabase
 import com.example.yousave.databaseClasses.Transaction
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.time.ZoneId
 import java.util.Calendar
 import java.util.Date
 
@@ -49,6 +47,7 @@ class AddTransactionActivity : AppCompatActivity() {
         repetitive = findViewById(R.id.repetitive)
 
         categories = findViewById(R.id.category_selector)
+
         ArrayAdapter.createFromResource(
             this,
             R.array.category_names,

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".home.HomeFragment"
-    >
+    tools:context=".home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -27,7 +26,7 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
         <!-->Earned<-->
         <TextView
             android:id="@+id/earned_text"
@@ -155,37 +154,37 @@
 
             android:fontFamily="@font/tai_heritage_pro_bold"
 
-            android:text="No transactions yet"
+            android:text="@string/no_transactions_message"
             android:textColor="@color/white"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/spent_num"
+            app:layout_constraintBottom_toTopOf="@id/categories"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/categories"/>
+            app:layout_constraintTop_toBottomOf="@id/spent_num" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/amazing_chart"
             android:layout_width="0dp"
             android:layout_height="75dp"
-            app:layout_constraintWidth_max="600dp"
+            android:layout_margin="20dp"
 
             android:backgroundTint="@color/transparent"
 
-            android:layout_margin="20dp"
+            app:cardCornerRadius="30dp"
 
             app:cardElevation="0dp"
-            app:cardCornerRadius="30dp"
+            app:layout_constraintBottom_toTopOf="@id/categories"
 
             app:layout_constraintEnd_toEndOf="parent"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spent_num"
-            app:layout_constraintBottom_toTopOf="@id/categories">
+            app:layout_constraintWidth_max="600dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </androidx.cardview.widget.CardView>
 
