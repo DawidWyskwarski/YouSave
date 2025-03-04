@@ -21,22 +21,17 @@ class HomeFragment(
     private lateinit var chart:RecyclerView
     private lateinit var chartAdapter: ChartAdapter
 
-    private lateinit var categories:RecyclerView
     private lateinit var categoriesAdapter: CategoriesAdapter
-
-    private lateinit var incomeT: TextView
-    private lateinit var expenseT: TextView
-    private lateinit var balanceT: TextView
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        incomeT = view.findViewById(R.id.earned_num)
-        expenseT = view.findViewById(R.id.spent_num)
-        balanceT = view.findViewById(R.id.balance_num)
+        val incomeT: TextView = view.findViewById(R.id.earned_num)
+        val expenseT: TextView = view.findViewById(R.id.spent_num)
+        val balanceT: TextView = view.findViewById(R.id.balance_num)
 
-        categories = view.findViewById(R.id.categories)
+        val categories: RecyclerView = view.findViewById(R.id.categories)
 
         chart = view.findViewById(R.id.chart)
 

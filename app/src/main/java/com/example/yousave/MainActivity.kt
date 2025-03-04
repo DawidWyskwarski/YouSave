@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.yousave.databaseClasses.AppDatabase
+import com.example.yousave.databaseClasses.IncomeExpense
 import com.example.yousave.databaseClasses.MoneyTransactions
 import com.example.yousave.databaseClasses.TransactionDao
 import com.example.yousave.home.Category
@@ -23,7 +24,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.Date
 
 class MainActivity : AppCompatActivity(){
 
@@ -104,6 +104,17 @@ class MainActivity : AppCompatActivity(){
             //pass data back to UI thread
             withContext(Dispatchers.Main) {
                 onDataLoaded(categories,totalIncome,totalExpense)
+            }
+        }
+    }
+
+    fun loadHistoryData(onDataLoaded: (List<IncomeExpense>) -> Unit){
+
+        lifecycleScope.launch {
+            val list:List<IncomeExpense> = transactionDao.getIncomesExpenses()
+
+            withContext(Dispatchers.Main){
+                onDataLoaded(list)
             }
         }
     }

@@ -95,13 +95,14 @@
         android:background="@color/black"
 
         app:itemIconTint="@color/main_bottom_bar_style"
-
         app:itemTextColor="@color/main_bottom_bar_style"
         app:labelVisibilityMode="labeled"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/main_bottom_bar" />
+        app:menu="@menu/main_bottom_bar"
+
+        app:itemActiveIndicatorStyle="@color/transparent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
