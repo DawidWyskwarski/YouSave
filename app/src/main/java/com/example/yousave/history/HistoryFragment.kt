@@ -24,7 +24,7 @@ class HistoryFragment : Fragment() {
         val pastList: RecyclerView = view.findViewById(R.id.past_list)
 
         (activity as? MainActivity)?.loadHistoryData { list ->
-            pastList.adapter = PastMonthsAdapter(list)
+            pastList.adapter = PastMonthsAdapter(requireContext() ,list)
             pastList.layoutManager = object: LinearLayoutManager(requireContext()){
                 override fun canScrollVertically() = false
             }
