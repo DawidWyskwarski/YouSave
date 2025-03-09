@@ -11,10 +11,12 @@ import com.example.yousave.MainActivity
 import com.example.yousave.R
 import com.example.yousave.history.pastMonths.PastMonthsAdapter
 import com.github.mikephil.charting.charts.CombinedChart
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.CombinedData
+import kotlin.math.min
 
 class HistoryFragment : Fragment() {
 
@@ -36,28 +38,66 @@ class HistoryFragment : Fragment() {
                 override fun canScrollVertically() = false
             }
 
-            // TODO change the chart style
-            val incomeDate = getBarDate(list.map { (_,income,_) -> income }, resources.getColor(R.color.income_green))
-            val expenseDate = getBarDate(list.map { (_,_,expense) -> expense }, resources.getColor(R.color.expense_red))
+            val limitedList = list.takeLast(12)
+
+            val incomeData = getBarData(limitedList.reversed().map { (_,income,_) -> income }, resources.getColor(R.color.income_green))
+            val expenseData = getBarData(limitedList.reversed().map { (_,_,expense) -> expense }, resources.getColor(R.color.expense_red))
 
             val combinedData = CombinedData()
-            combinedData.setData( BarData(incomeDate,expenseDate) )
+            combinedData.setData( BarData(incomeData,expenseData) )
 
+            chart.xAxis.apply {
+                position = XAxis.XAxisPosition.BOTTOM
+                granularity = 1f
 
-            chart.data = combinedData
+                setLabelCount(min(list.size,12),true)
+
+                setDrawGridLines(false)
+
+                textColor = resources.getColor(R.color.white)
+
+                axisLineColor = textColor
+                axisLineWidth = 1f
+
+                setCenterAxisLabels(false)
+                axisMinimum = 0f
+            }
+
+            chart.axisLeft.apply {
+                setDrawGridLines(false)
+
+                textColor = chart.xAxis.textColor
+
+                axisLineColor = textColor
+                axisLineWidth = 1f
+
+                axisMinimum = 0f
+            }
+
+            chart.apply{
+
+                description.isEnabled = false
+                legend.isEnabled = false
+
+                setDrawGridBackground(false)
+                axisRight.isEnabled = false
+
+                data = combinedData
+            }
+
             chart.invalidate()
         }
     }
 
-    private fun getBarDate(values: List<Double>, color:Int): BarDataSet{
+    private fun getBarData(values: List<Double>, color:Int): BarDataSet{
         val entries = values.mapIndexed { index, value ->
             BarEntry( index.toFloat(), value.toFloat() )
         }
 
         return BarDataSet(entries, "").apply {
             this.color = color
-            valueTextColor = resources.getColor(R.color.white)
-            valueTextSize = 10f
+
+            valueTextSize = 0f
         }
     }
 }

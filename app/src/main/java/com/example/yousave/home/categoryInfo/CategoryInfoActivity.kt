@@ -146,7 +146,6 @@ class CategoryInfoActivity : AppCompatActivity() {
 
             textColor = resources.getColor(R.color.white)
 
-
             axisLineColor = textColor
             axisLineWidth = 1f
         }
