@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yousave.R
+import com.example.yousave.formatMoney
 
 class CategoriesAdapter(
     private var categories: List<Category>,
@@ -55,7 +56,7 @@ class CategoriesAdapter(
             icon.setImageResource(categories[position].image)
 
             val desc =
-                "${categories[position].moneySpent} zł in ${categories[position].transactions} transactions"
+                "${ formatMoney(categories[position].moneySpent) } in ${categories[position].transactions} transactions"
 
             money.text = desc
         }

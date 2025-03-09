@@ -1,6 +1,5 @@
 package com.example.yousave.home
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yousave.MainActivity
 import com.example.yousave.R
+import com.example.yousave.formatMoney
 import com.example.yousave.home.categoryInfo.CategoryInfoActivity
 
 class HomeFragment(
@@ -23,7 +23,6 @@ class HomeFragment(
 
     private lateinit var categoriesAdapter: CategoriesAdapter
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -54,9 +53,9 @@ class HomeFragment(
                 override fun canScrollVertically() = false
             }
 
-            incomeT.text = "$income zł"
-            expenseT.text = "$expense zł"
-            balanceT.text = "${income - expense} zł"
+            incomeT.text = formatMoney(income)
+            expenseT.text = formatMoney(expense)
+            balanceT.text = formatMoney(income - expense)
         }
 
     }

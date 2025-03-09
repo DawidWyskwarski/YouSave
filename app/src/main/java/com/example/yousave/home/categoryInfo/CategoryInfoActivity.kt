@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.yousave.R
 import com.example.yousave.databaseClasses.AppDatabase
 import com.example.yousave.databaseClasses.Transaction
+import com.example.yousave.formatMoney
 import com.example.yousave.home.Category
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
@@ -74,7 +75,7 @@ class CategoryInfoActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.icon).apply { setImageResource(category.image) }
 
         findViewById<TextView>(R.id.money).apply {
-            val tmp = "${category.moneySpent} zł in ${category.transactions} transactions"
+            val tmp = "${formatMoney(category.moneySpent)} in ${category.transactions} transactions"
             text = tmp
             setTextColor(category.color)
         }

@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yousave.R
 import com.example.yousave.databaseClasses.Transaction
+import com.example.yousave.formatMoney
 import java.text.SimpleDateFormat
 
 class InfoAdapter(var transactions: List<Transaction>) :
@@ -38,7 +39,7 @@ class InfoAdapter(var transactions: List<Transaction>) :
 
             date.text = dateFormat.format(data)
 
-            val pri = "${transactions[position].money} zł"
+            val pri = formatMoney(transactions[position].money)
 
             price.text = pri
 

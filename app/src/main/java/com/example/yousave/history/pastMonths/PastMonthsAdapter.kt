@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yousave.R
 import com.example.yousave.databaseClasses.IncomeExpense
-import kotlinx.coroutines.withContext
+import com.example.yousave.formatMoney
 
 class PastMonthsAdapter(private val context: Context, private var pastInfo:List<IncomeExpense>):RecyclerView.Adapter<PastMonthsAdapter.PastMonthViewHolder>() {
 
@@ -32,8 +32,8 @@ class PastMonthsAdapter(private val context: Context, private var pastInfo:List<
     override fun onBindViewHolder(holder: PastMonthViewHolder, position: Int) {
         holder.apply {
             timePeriod.text = formatDate( pastInfo[position].formatted_date )
-            income.text = pastInfo[position].income.toString()
-            expense.text = pastInfo[position].expense.toString()
+            income.text = formatMoney( pastInfo[position].income )
+            expense.text = formatMoney( pastInfo[position].expense )
         }
     }
 
